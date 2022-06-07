@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:element name="Movies">
+  <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element ref="Year" minOccurs="1" maxOccurs="1"/>
+      <xsd:element ref="Movie" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="Year">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="1900"/>
+      <xsd:maxInclusive value="2021"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<xsd:element name="Movie">
+  <xsd:complexType mixed="true">
+    <xsd:sequence>
+      <xsd:element ref="Title" minOccurs="1" maxOccurs="1"/>
+      <xsd:element ref="Genre" minOccurs="1" maxOccurs="3"/>
+      <xsd:element ref="Duration" minOccurs="0" maxOccurs="1"/>
+      <xsd:element ref="Cast" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+
+    <xsd:attribute name="langs" use="optional">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:whiteSpace value="collapse"></xsd:whiteSpace>
+          <xsd:pattern value="[a-zA-Z][a-zA-Z]{1}([ ][a-zA-Z][a-zA-Z])*"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="Cast">
+  <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element ref="Name"/>
+      <xsd:element ref="Role"/>
+      <xsd:element ref="Phone" minOccurs="0" maxOccurs="1"/>
+      <xsd:element ref="Email" minOccurs="0" maxOccurs="1"/>
+      <xsd:element ref="MML" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+
+    <xsd:attribute name="id" use="required">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="([A-Za-z]{3}[0-9]{3})"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+  </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="Title" type="xsd:string"/>
+
+<xsd:element name="Genre">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Comedy"/>
+            <xsd:enumeration value="Action"/>
+            <xsd:enumeration value="Drama"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<xsd:element name="Duration">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="60"></xsd:minInclusive>
+      <xsd:maxInclusive value="300"></xsd:maxInclusive>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+
+<xsd:element name="Name" type="xsd:string"/>
+
+<xsd:element name="Role">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Main"/>
+      <xsd:enumeration value="Supporting"/>
+      <xsd:enumeration value="Extra"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<xsd:element name="Phone">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:positiveInteger">
+      <xsd:pattern value="[0-9]{9}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<xsd:element name="Email">
+  <xsd:simpleType>
+  <xsd:restriction base="xsd:string">
+    <xsd:pattern value="[^@]+@[^\.]+\..+"/>
+  </xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+
+<xsd:element name="MML" type="xsd:anyURI"/>
+
+</xsd:schema>
